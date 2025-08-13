@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
+import Image from "next/image";
 
 const FORMSPARK_FORM_ID = "gQzFUvFRI";
 const FORMSPARK_URL = `https://submit-form.com/${FORMSPARK_FORM_ID}`;
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function WaitlistPage() {
   const [email, setEmail] = useState("");
@@ -40,7 +42,8 @@ export default function WaitlistPage() {
       if (!res.ok) throw new Error("submit failed");
       setSubmitted(true);
       setEmail("");
-    } catch (_err) {
+    } catch (err) {
+      console.error("Form submission error:", err);
       setError("加入失敗，請再試一次。");
     } finally {
       setLoading(false);
@@ -58,7 +61,7 @@ export default function WaitlistPage() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.6, ease: easeInOut },
     },
   };
 
@@ -73,7 +76,7 @@ export default function WaitlistPage() {
             y: [0, -20, 10, 0],
             scale: [1, 1.1, 0.95, 1],
           }}
-          transition={{ duration: 22, repeat: Infinity, ease: [0, 0, 1, 1] }}
+          transition={{ duration: 22, repeat: Infinity, ease: easeInOut }}
         />
         <motion.div
           className="absolute -bottom-24 -right-24 h-[28rem] w-[28rem] rounded-full bg-amber-300/30 blur-3xl"
@@ -85,7 +88,7 @@ export default function WaitlistPage() {
           transition={{
             duration: 26,
             repeat: Infinity,
-            ease: [0.16, 1, 0.3, 1],
+            ease: easeInOut,
           }}
         />
         <motion.div
@@ -94,7 +97,7 @@ export default function WaitlistPage() {
           transition={{
             duration: 18,
             repeat: Infinity,
-            ease: [0.45, 0, 0.55, 1],
+            ease: easeInOut,
           }}
         />
       </div>
@@ -111,7 +114,13 @@ export default function WaitlistPage() {
             {/* Logo */}
             <motion.div variants={fadeUp} className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
-                <img src="/icon.png" alt="Yapyap" className="h-10 w-10" />
+                <Image
+                  src={`${base}/icon.png`}
+                  alt="Yapyap"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10"
+                />
               </div>
               <span className="text-2xl font-semibold text-gray-900">
                 Yapyap
@@ -171,7 +180,7 @@ export default function WaitlistPage() {
                       transition={{
                         repeat: Infinity,
                         duration: 1.8,
-                        ease: [0, 0, 1, 1],
+                        ease: easeInOut,
                       }}
                     />
                     {loading ? "加入中…" : "加入候補名單"}
@@ -219,17 +228,19 @@ export default function WaitlistPage() {
 }
 
 function PhoneMockup() {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.45, 0, 0.55, 1] }}
+      transition={{ duration: 0.8, ease: easeInOut }}
       className="relative"
     >
       {/* floating effect */}
       <motion.div
         animate={{ y: [0, -10, 0], rotate: [0, -0.5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: easeInOut }}
         whileHover={{ rotateY: 6, rotateX: -2, scale: 1.02 }}
         className="relative h-[575px] w-[275px] rounded-[3rem] bg-black p-2 shadow-2xl lg:h-[640px] lg:w-[305px]"
       >
@@ -237,10 +248,11 @@ function PhoneMockup() {
         <div className="absolute left-1/2 top-6 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
         {/* Screen */}
         <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white">
-          <img
-            src="/screenshot.jpeg"
+          <Image
+            src={`${base}/screenshot.jpeg`}
             alt="Yapyap App Screenshot"
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
           />
           {/* moving glare */}
           <motion.div
@@ -249,7 +261,7 @@ function PhoneMockup() {
             transition={{
               duration: 6,
               repeat: Infinity,
-              ease: [0.45, 0, 0.55, 1],
+              ease: easeInOut,
             }}
           />
         </div>

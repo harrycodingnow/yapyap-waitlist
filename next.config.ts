@@ -1,17 +1,16 @@
-import type { NextConfig } from 'next';
-
+// next.config.js
 const isProd = process.env.NODE_ENV === 'production';
+const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
-// CHANGE THIS: repo name only if you're deploying under /REPO
-const repoName = 'yapyap-waitlist'; // '' if using USERNAME.github.io (user site)
-
-const nextConfig: NextConfig = {
-  output: 'export',          // enables static export
-  distDir: 'build',          // export folder
-  images: { unoptimized: true }, // GH Pages doesn't have the Next image optimizer
-  // These two are only needed when deploying under /REPO
-  basePath: isProd && repoName ? `/${repoName}` : undefined,
-  assetPrefix: isProd && repoName ? `/${repoName}/` : undefined,
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
+  basePath: isProd && isGitHubPages ? '/yapyap-waitlist' : '',
+  assetPrefix: isProd && isGitHubPages ? '/yapyap-waitlist/' : '',
+  trailingSlash: true,
+  images: { 
+    unoptimized: true // Required for static export
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
