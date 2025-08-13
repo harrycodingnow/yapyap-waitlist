@@ -79,12 +79,7 @@ function WaitlistPage() {
             y: 0,
             transition: {
                 duration: 0.6,
-                ease: [
-                    0.16,
-                    1,
-                    0.3,
-                    1
-                ]
+                ease: "easeInOut"
             }
         }
     };
@@ -119,12 +114,7 @@ function WaitlistPage() {
                         transition: {
                             duration: 22,
                             repeat: Infinity,
-                            ease: [
-                                0,
-                                0,
-                                1,
-                                1
-                            ]
+                            ease: "easeInOut"
                         }
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -156,12 +146,7 @@ function WaitlistPage() {
                         transition: {
                             duration: 26,
                             repeat: Infinity,
-                            ease: [
-                                0.16,
-                                1,
-                                0.3,
-                                1
-                            ]
+                            ease: "easeInOut"
                         }
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -181,12 +166,7 @@ function WaitlistPage() {
                         transition: {
                             duration: 18,
                             repeat: Infinity,
-                            ease: [
-                                0.45,
-                                0,
-                                0.55,
-                                1
-                            ]
+                            ease: "easeInOut"
                         }
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -375,12 +355,7 @@ function WaitlistPage() {
                                                             transition: {
                                                                 repeat: Infinity,
                                                                 duration: 1.8,
-                                                                ease: [
-                                                                    0,
-                                                                    0,
-                                                                    1,
-                                                                    1
-                                                                ]
+                                                                ease: "easeInOut"
                                                             }
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/page.tsx",
@@ -505,12 +480,7 @@ function PhoneMockup() {
         },
         transition: {
             duration: 0.8,
-            ease: [
-                0.45,
-                0,
-                0.55,
-                1
-            ]
+            ease: "easeInOut"
         },
         className: "relative",
         children: [
@@ -530,12 +500,7 @@ function PhoneMockup() {
                 transition: {
                     duration: 6,
                     repeat: Infinity,
-                    ease: [
-                        0.45,
-                        0,
-                        0.55,
-                        1
-                    ]
+                    ease: "easeInOut"
                 },
                 whileHover: {
                     rotateY: 6,
@@ -574,12 +539,7 @@ function PhoneMockup() {
                                 transition: {
                                     duration: 6,
                                     repeat: Infinity,
-                                    ease: [
-                                        0.45,
-                                        0,
-                                        0.55,
-                                        1
-                                    ]
+                                    ease: "easeInOut"
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.tsx",
