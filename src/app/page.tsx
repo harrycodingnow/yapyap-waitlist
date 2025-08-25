@@ -3,53 +3,9 @@ import React, { useState } from "react";
 import { motion, easeInOut } from "framer-motion";
 import Image from "next/image";
 
-const FORMSPARK_FORM_ID = "gQzFUvFRI";
-const FORMSPARK_URL = `https://submit-form.com/${FORMSPARK_FORM_ID}`;
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function WaitlistPage() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setError("請輸入有效的 Email");
-      return;
-    }
-    try {
-      setLoading(true);
-      const res = await fetch(FORMSPARK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          source: "yapyap_waitlist",
-          page: typeof window !== "undefined" ? window.location.href : "",
-          locale:
-            typeof navigator !== "undefined" && navigator.language
-              ? navigator.language
-              : "zh-TW",
-        }),
-      });
-
-      if (!res.ok) throw new Error("submit failed");
-      setSubmitted(true);
-      setEmail("");
-    } catch (err) {
-      console.error("Form submission error:", err);
-      setError("加入失敗，請再試一次。");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // animations
   const stagger = {
     hidden: {},
@@ -132,7 +88,7 @@ export default function WaitlistPage() {
               <h1 className="text-5xl font-extrabold tracking-tight leading-tight text-gray-900 lg:text-7xl">
                 一個 <span className="text-gray-700">(即時匿名)</span>
                 <br />
-                陪伴你社區的夥伴
+                陪伴你的社群
               </h1>
               <p className="text-lg text-gray-600 max-w-lg leading-relaxed">
                 讓你與附近的人分享即時想法——有趣、有用，有時候還有點辛辣。無需個人檔案，沒有壓力
@@ -145,54 +101,35 @@ export default function WaitlistPage() {
               </ul>
             </motion.div>
 
-            {/* Email Form */}
-            <motion.form
-              variants={fadeUp}
-              onSubmit={onSubmit}
-              className="relative max-w-md"
-            >
-              {submitted ? (
-                <div className="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-green-700">
-                  <span>✅</span>
-                  <span>收到！我們會在開放時通知你。</span>
-                </div>
-              ) : (
-                <div className="flex items-stretch gap-0 overflow-hidden rounded-xl border border-gray-200 bg-white/90 shadow-sm focus-within:ring-4 focus-within:ring-orange-200">
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="輸入你的電子郵件"
-                    className="flex-1 h-12 px-4 text-gray-900 bg-transparent outline-none placeholder:text-gray-400"
-                    disabled={loading}
-                  />
-                  <motion.button
-                    whileHover={{ scale: loading ? 1 : 1.02 }}
-                    whileTap={{ scale: loading ? 1 : 0.98 }}
-                    type="submit"
-                    disabled={loading}
-                    className="relative h-12 px-6 bg-[#FDBA74] text-white font-semibold rounded-none disabled:opacity-60"
-                  >
-                    <motion.span
-                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent"
-                      animate={{ x: ["-120%", "120%"] }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 1.8,
-                        ease: easeInOut,
-                      }}
-                    />
-                    {loading ? "加入中…" : "加入候補名單"}
-                  </motion.button>
-                </div>
-              )}
-              {error && (
-                <div className="mt-2 text-sm text-red-600" aria-live="polite">
-                  {error}
-                </div>
-              )}
-            </motion.form>
+            {/* App Store Link */}
+            <motion.div variants={fadeUp} className="space-y-4">
+              <motion.a
+                href="https://apps.apple.com/tw/app/yapyap-%E5%8D%B3%E6%99%82%E5%8C%BF%E5%90%8D%E7%A4%BE%E7%BE%A4-%E9%99%90%E5%AE%9A-5-%E5%85%AC%E9%87%8C/id6751183691?l=en-GB"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative inline-flex items-center justify-center gap-3 rounded-xl bg-black px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-gray-800 transition-colors overflow-hidden group"
+              >
+                <motion.span
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  animate={{ x: ["-120%", "120%"] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2.5,
+                    ease: easeInOut,
+                  }}
+                />
+                <svg
+                  className="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                </svg>
+                在 App Store 下載
+              </motion.a>
+            </motion.div>
 
             {/* Follow Link */}
             <motion.a
@@ -200,7 +137,7 @@ export default function WaitlistPage() {
               href="https://www.threads.com/@yapyap.app"
               className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors"
             >
-              關注 @yapyap 以獲取最新消息
+              關注 Threads @yapyap2026
               <svg
                 className="h-4 w-4"
                 viewBox="0 0 24 24"

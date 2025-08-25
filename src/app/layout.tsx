@@ -13,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW">
-      <body className="antialiased">{children}</body>
+      <body suppressHydrationWarning className="antialiased">
+        {children}
+      </body>
     </html>
   );
 }
